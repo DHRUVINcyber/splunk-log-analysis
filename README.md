@@ -11,7 +11,6 @@ This project demonstrates how to upload and analyze logs using Splunk SIEM.
 ## Tools Used
 - Splunk Enterprise
 - Windows Logs
-- Sysmon
 
 ## Steps
 1. Install Splunk
