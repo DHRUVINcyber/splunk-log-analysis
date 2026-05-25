@@ -31,3 +31,4 @@ Default URL:
 
 ```bash
 http://localhost:8000
+Then follows the steps from given poc file to add the data file into Splunk enterprise.
