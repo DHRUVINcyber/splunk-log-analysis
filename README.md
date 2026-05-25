@@ -25,10 +25,16 @@ Download and install Splunk Enterprise from the official website.
 After installation:
 
 1. Open Splunk Web
-2. Login using your credentials
+2. Login using your credentials 
 
-Default URL:
+# Step 2 – Add data into Splunk
 
-```bash
-http://localhost:8000
-Then follows the steps from given poc file to add the data file into Splunk enterprise.
+Follows the steps from given poc file to add the data file into Splunk enterprise.
+
+# Step 3 – Verify the ingestion on data 
+
+Go to the Search & Reporting and search index=main. You will see that the log data has been successfully added into Splunk Enterprise.
+
+**Here, the main index is used because it is the default index in Splunk Enterprise. Splunk also provides an option to create separate custom indexes for organizing different types of log data.**
+
+
