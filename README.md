@@ -448,3 +448,103 @@ index=main EventCode=4688 process=powershell.exe
 -SPL queries and Windows process creation logs helped detect attacker behavior, identify compromised systems, analyze suspicious command execution, detect privileged access attempts, and    identify account lockout activity.
 
 -The investigation demonstrated realistic SOC analyst workflows including authentication analysis, PowerShell abuse detection, privileged access monitoring, attack timeline investigation,   and alert creation.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## 5. RDP Brute Force Detection Using Splunk ##
+
+## Objective
+
+-Detect RDP brute-force attacks by analyzing failed and successful RDP authentication events and identifying malicious source IPs.
+
+## Investigation Queries
+
+### View All Successful RDP Logins
+```
+index=rdp-bruteforce EventCode=4624
+| stats count by src_ip
+| sort - count
+```
+-Displays source IPs generating successful RDP logins.
+-Helps establish a baseline of legitimate RDP activity.
+
+### View All Failed RDP Logins
+```
+index=rdp-bruteforce EventCode=4625
+| stats count by src_ip
+| sort - count
+```
+-Displays source IPs generating failed RDP logins.
+-High counts may indicate brute-force activity.
+
+### Compare Successful and Failed Logins
+```
+index=rdp-bruteforce (EventCode=4624 OR EventCode=4625)
+| stats count by src_ip EventCode
+```
+-Shows successful and failed login counts per source IP.
+
+### Identify Suspicious IP Address
+```
+index=rdp-bruteforce EventCode=4625 LogonType=10
+| stats count by src_ip
+| sort - count
+```
+-The IP with the highest failed RDP attempts is the primary suspect.
+
+### Investigate Suspicious IP Activity
+```
+index=rdp-bruteforce src_ip=185.199.110.77
+| table _time EventCode user src_ip dest_ip dest_port hostname status
+| sort _time
+```
+-Displays the complete activity timeline of the suspicious IP.
+
+### Identify Targeted User Accounts
+```
+index=rdp-bruteforce src_ip=185.199.110.77 EventCode=4625
+| stats values(user) as targeted_users
+```
+-Shows all accounts targeted during the attack.
+
+### Verify Successful Login After Failed Attempts
+```
+index=rdp-bruteforce src_ip=185.199.110.77
+| table _time EventCode user status
+| sort _time
+```
+
+### Identify the Compromised User
+```
+index=rdp-bruteforce src_ip=185.199.110.77 EventCode=4624
+| stats count by user
+```
+-Identifies the account that was successfully accessed.
+
+### Main Detection Query
+```
+index=rdp-bruteforce EventCode=4625 LogonType=10
+| bucket span=5m _time
+| stats count by _time src_ip user
+| where count > 10
+```
+-Detects more than 10 failed RDP login attempts from the same IP within 5 minutes.
+
+## Findings
+-Multiple failed RDP authentication attempts were detected.
+
+-Source IP 185.199.110.77 generated the highest number of failed logins.
+
+-The attacker targeted the administrator account.
+
+-Activity occurred over RDP (LogonType=10, dest_port=3389).
+
+-A successful login (4624) was observed after repeated failures.
+
+-The compromised account was identified through successful authentication events.
+
+## Conclusion
+
+-The investigation confirmed an RDP brute-force attack where a malicious source IP performed multiple failed RDP authentication attempts against a target system and eventually obtained      successful access to the administrator account. This activity indicates potential unauthorized remote access and should be escalated for containment and remediation.
+
+**Note:** Normal login activity is present in the dataset, while RDP brute-force attempts are identified by LogonType=10 and dest_port=3389, showing multiple failed logins followed by a successful compromise from the same source IP.
