@@ -240,7 +240,7 @@ Source IP  |  Activity
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## 4. PowerShell Abuse Detection Using Splunk @@
+## 4. PowerShell Abuse Detection Using Splunk ##
 
 ## Objective
 
@@ -249,9 +249,9 @@ Source IP  |  Activity
 ## Investigation Overview
 
 -Authentication and process creation logs were uploaded into Splunk and analyzed using SPL queries.  
-=The investigation focused on identifying suspicious PowerShell execution activity commonly used by attackers after successful compromise.  
-=Multiple PowerShell abuse techniques were detected including EncodedCommand execution, DownloadString payload activity, Invoke-WebRequest usage, and ExecutionPolicy Bypass attempts.  
-=The investigation also identified successful compromise activity, privileged logon events, and account lockout activity related to suspicious source IP addresses.  
+-The investigation focused on identifying suspicious PowerShell execution activity commonly used by attackers after successful compromise.  
+-Multiple PowerShell abuse techniques were detected including EncodedCommand execution, DownloadString payload activity, Invoke-WebRequest usage, and ExecutionPolicy Bypass attempts.   
+-The investigation also identified successful compromise activity, privileged logon events, and account lockout activity related to suspicious source IP addresses.  
 
 ## Query
 
@@ -259,7 +259,8 @@ Source IP  |  Activity
 ```
 index=main EventCode=4688 process=powershell.exe
 ```
-=Displays all PowerShell process execution events.
+-Displays all PowerShell process execution events.
+
 ### Count Total PowerShell Executions
 ```
 index=main EventCode=4688 process=powershell.exe
@@ -273,7 +274,7 @@ index=main EventCode=4688 process=powershell.exe
 | stats count by user
 | sort -count
 ```
-=Displays users executing PowerShell most frequently.
+-Displays users executing PowerShell most frequently.
 
 ### Detect EncodedCommand Usage
 ```
@@ -289,7 +290,7 @@ index=main EventCode=4688 process=powershell.exe EncodedCommand
 index=main EventCode=4688 process=powershell.exe
 | search command="*ExecutionPolicy Bypass*"
 ```
-=Detects attempts to bypass PowerShell security restrictions.
+-Detects attempts to bypass PowerShell security restrictions.
 
 ### Detect DownloadString Activity
 ```
@@ -420,11 +421,9 @@ index=main EventCode=4688 process=powershell.exe
 
 ## Conclusion
 
--The investigation successfully identified suspicious PowerShell abuse activity using Splunk SIEM.
-
--SPL queries and Windows process creation logs helped detect attacker behavior, identify compromised systems, analyze suspicious command execution, detect privileged access attempts, and    identify account lockout activity.
-
--The investigation demonstrated realistic SOC analyst workflows including authentication analysis, PowerShell abuse detection, privileged access monitoring, attack timeline investigation,   and alert creation.
+-The investigation successfully identified suspicious PowerShell abuse activity using Splunk SIEM.  
+-SPL queries and Windows process creation logs helped detect attacker behavior, identify compromised systems, analyze suspicious command execution, detect privileged access attempts, and    identify account lockout activity.  
+-The investigation demonstrated realistic SOC analyst workflows including authentication analysis, PowerShell abuse detection, privileged access monitoring, attack timeline investigation,   and alert creation.  
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
