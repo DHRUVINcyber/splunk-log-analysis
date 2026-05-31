@@ -244,7 +244,7 @@ Source IP  |  Activity
 
 ## Objective
 
-=The objective of this investigation is to detect suspicious PowerShell abuse activity using Splunk SIEM by analyzing Windows authentication and process creation logs to identify malicious  PowerShell execution techniques, successful compromise attempts, privileged account usage, and account lockout activity.
+-The objective of this investigation is to detect suspicious PowerShell abuse activity using Splunk SIEM by analyzing Windows authentication and process creation logs to identify malicious  PowerShell execution techniques, successful compromise attempts, privileged account usage, and account lockout activity.
 
 ## Investigation Overview
 
@@ -266,7 +266,7 @@ index=main EventCode=4688 process=powershell.exe
 index=main EventCode=4688 process=powershell.exe
 | stats count
 ```
-=Counts total PowerShell execution events.
+-Counts total PowerShell execution events.
 
 ### Identify Users Executing PowerShell
 ```
@@ -311,7 +311,7 @@ index=main EventCode=4688 process=powershell.exe
 index=main EventCode=4688 process=powershell.exe
 | regex command="(?i)(encodedcommand|downloadstring|invoke-webrequest|executionpolicy bypass)"
 ```
-=Detects multiple suspicious PowerShell abuse indicators together.
+-Detects multiple suspicious PowerShell abuse indicators together.
 
 ### Detect Suspicious Source IP
 ```
