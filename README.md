@@ -69,9 +69,9 @@ In the uploaded dataset, two suspicious IP addresses were identified performing 
 
 ## Findings
 
--Multiple failed login attempts were detected from suspicious IP addresses.
--Repeated authentication failures indicate brute-force attack behavior.
--Suspicious activity targeted user authentication services.
+-Multiple failed login attempts were detected from suspicious IP addresses.  
+-Repeated authentication failures indicate brute-force attack behavior.  
+-Suspicious activity targeted user authentication services.  
 
 ## conclusion 
 
@@ -142,9 +142,9 @@ index=bruteforce (EventCode=4624 OR EventCode=4625)
 
 ## Findings
 
--Multiple failed authentication attempts were detected from suspicious IP addresses.
--Successful authentication after repeated failures indicates possible account compromise.
--Brute-force attack behavior was successfully identified using Splunk SIEM.
+-Multiple failed authentication attempts were detected from suspicious IP addresses.  
+-Successful authentication after repeated failures indicates possible account compromise.  
+-Brute-force attack behavior was successfully identified using Splunk SIEM.  
 
 ## Conclusion
 
@@ -227,17 +227,12 @@ Source IP  |  Activity
 
 ## Findings
 
--Multiple failed login attempts were detected from a single source IP address.
-
--The attacker targeted several user accounts within a short period of time.
-
--Authentication behavior matched password spraying attack patterns.
-
--A successful login event was observed after repeated failed attempts.
-
--The compromised user account was identified through successful authentication events.
-
--The suspicious source IP responsible for the attack activity was successfully identified.
+-Multiple failed login attempts were detected from a single source IP address.  
+-The attacker targeted several user accounts within a short period of time.  
+-Authentication behavior matched password spraying attack patterns.  
+-A successful login event was observed after repeated failed attempts.  
+-The compromised user account was identified through successful authentication events.  
+-The suspicious source IP responsible for the attack activity was successfully identified.  
 
 ## Conclusion
 
@@ -253,13 +248,10 @@ Source IP  |  Activity
 
 ## Investigation Overview
 
--Authentication and process creation logs were uploaded into Splunk and analyzed using SPL queries.
-
-=The investigation focused on identifying suspicious PowerShell execution activity commonly used by attackers after successful compromise.
-
-=Multiple PowerShell abuse techniques were detected including EncodedCommand execution, DownloadString payload activity, Invoke-WebRequest usage, and ExecutionPolicy Bypass attempts.
-
-=The investigation also identified successful compromise activity, privileged logon events, and account lockout activity related to suspicious source IP addresses.
+-Authentication and process creation logs were uploaded into Splunk and analyzed using SPL queries.  
+=The investigation focused on identifying suspicious PowerShell execution activity commonly used by attackers after successful compromise.  
+=Multiple PowerShell abuse techniques were detected including EncodedCommand execution, DownloadString payload activity, Invoke-WebRequest usage, and ExecutionPolicy Bypass attempts.  
+=The investigation also identified successful compromise activity, privileged logon events, and account lockout activity related to suspicious source IP addresses.  
 
 ## Query
 
@@ -338,13 +330,10 @@ index=main src_ip="45.67.210.12" (EventCode=4624 OR EventCode=4688)
 
 ## Investigation Findings
 
--Successful login activity was observed.
-
--Suspicious PowerShell execution occurred after successful authentication.
-
--Encoded PowerShell commands were executed.
-
--Payload download behavior was identified.
+-Successful login activity was observed.  
+-Suspicious PowerShell execution occurred after successful authentication.  
+-Encoded PowerShell commands were executed.  
+-Payload download behavior was identified.  
 
 ### Detect Successful Compromise After Failed Attempts
 ```
@@ -405,15 +394,11 @@ index=main EventCode=4688 process=powershell.exe
 
 ## Detection Logic
 
--EncodedCommand execution
-
--DownloadString usage
-
--Invoke-WebRequest activity
-
--ExecutionPolicy Bypass attempts
-
--Suspicious PowerShell abuse behavior
+-EncodedCommand execution  
+-DownloadString usage  
+-Invoke-WebRequest activity  
+-ExecutionPolicy Bypass attempts  
+-Suspicious PowerShell abuse behavior  
 
 ### Alert Query
 ```
@@ -423,23 +408,15 @@ index=main EventCode=4688 process=powershell.exe
 
 ## Findings
 
--Suspicious PowerShell activity was successfully detected.
-
--Encoded PowerShell commands were identified.
-
--Execution policy bypass attempts were detected.
-
--PowerShell download activity was observed.
-
--Successful compromise activity occurred before PowerShell abuse.
-
--Privileged logon events were detected after successful authentication.
-
--Account lockout activity indicated repeated failed login attempts.
-
--The suspicious source IP and compromised user account were successfully identified.
-
--Authentication and process creation logs helped build a complete attack timeline.
+-Suspicious PowerShell activity was successfully detected.  
+-Encoded PowerShell commands were identified.  
+-Execution policy bypass attempts were detected.  
+-PowerShell download activity was observed.  
+-Successful compromise activity occurred before PowerShell abuse.  
+-Privileged logon events were detected after successful authentication.  
+-Account lockout activity indicated repeated failed login attempts.  
+-The suspicious source IP and compromised user account were successfully identified.  
+-Authentication and process creation logs helped build a complete attack timeline.  
 
 ## Conclusion
 
@@ -531,17 +508,13 @@ index=rdp-bruteforce EventCode=4625 LogonType=10
 -Detects more than 10 failed RDP login attempts from the same IP within 5 minutes.
 
 ## Findings
--Multiple failed RDP authentication attempts were detected.
 
--Source IP 185.199.110.77 generated the highest number of failed logins.
-
--The attacker targeted the administrator account.
-
--Activity occurred over RDP (LogonType=10, dest_port=3389).
-
--A successful login (4624) was observed after repeated failures.
-
--The compromised account was identified through successful authentication events.
+-Multiple failed RDP authentication attempts were detected.  
+-Source IP 185.199.110.77 generated the highest number of failed logins.  
+-The attacker targeted the administrator account.  
+-Activity occurred over RDP (LogonType=10, dest_port=3389).  
+-A successful login (4624) was observed after repeated failures.  
+-The compromised account was identified through successful authentication events.  
 
 ## Conclusion
 
